@@ -18,6 +18,10 @@ namespace PortalFramework
         private int maximumNumberOfRecursion = 4;
 
         [SerializeField]
+        [Tooltip("Allow to have an oblique near clip when rendering a portal. Allowing to not render objects on the backside of the destination portal.")]
+        private bool obliqueNearClipEnabled = true;
+
+        [SerializeField]
         [Tooltip("Allow to have a seamless lighting through portal from the directional lights.")]
         private bool seamlessDirectionalLightEnabled = true;
 
@@ -279,7 +283,10 @@ namespace PortalFramework
             }
 
             // Clip the projection matrix near clip, so that we don't see object on the back of the destination portal
-            PortalRenderSystem.ClipProjectionMatrixNear(PortalRenderSystem.portalRenderCamera, portalToRender.DestinationPortal);
+            if (this.obliqueNearClipEnabled)
+            {
+                PortalRenderSystem.ClipProjectionMatrixNear(PortalRenderSystem.portalRenderCamera, portalToRender.DestinationPortal);
+            }
 
             // Render the portal texture
             RenderTexture renderTexture = RenderTexture.GetTemporary(this.pixelWidth, this.pixelHeight, 32);

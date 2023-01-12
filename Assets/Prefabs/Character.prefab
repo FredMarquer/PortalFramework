@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maximumNumberOfRecursion: 4
+  obliqueNearClipEnabled: 1
   seamlessDirectionalLightEnabled: 1
   teleportableObject: {fileID: 8161525780222857150}
   renderer: {fileID: 3709587638337155866}
