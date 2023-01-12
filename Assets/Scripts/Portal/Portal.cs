@@ -46,6 +46,7 @@ namespace PortalFramework
         [Tooltip("Layer of the portal raycast receiver. Used for raycasting through portals (from the PortalRaycast class).")]
         private int raycastReceiverLayer;
 
+        private new Renderer renderer;
         private Material material;
 
         private Transform inverseTranform;
@@ -144,6 +145,9 @@ namespace PortalFramework
         public void SetMaterialTexture(Texture texture)
         {
             this.material.SetTexture(Portal.mainTexPropertyId, texture);
+
+            // Disable the renderer if there is not texture
+            this.renderer.enabled = texture != null;
         }
 
         /// <summary>
@@ -324,8 +328,9 @@ namespace PortalFramework
                 MeshFilter meshFilter = rendererGameObject.AddComponent<MeshFilter>();
                 meshFilter.mesh = MeshBuilder.GetPortalMesh();
 
-                MeshRenderer renderer = rendererGameObject.AddComponent<MeshRenderer>();
-                renderer.sharedMaterial = this.material;
+                this.renderer = rendererGameObject.AddComponent<MeshRenderer>();
+                this.renderer.sharedMaterial = this.material;
+                this.renderer.enabled = false;
             }
 
             // Create the trigger
