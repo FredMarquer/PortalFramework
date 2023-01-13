@@ -62,6 +62,7 @@ Basic character controller:
 * Anti aliasing generate artifact on the portal edges
 * Renderer of TeleportableObject/Clone in a portal is not clipped and can be seen on the backside of a portal
 * Collider of TeleportableObject/Clone in a portal exists and can collide with other stuff on the backside of the portal
+* High speed objects can go through portals without being teleported
 * Seamless lighting not perfect for some material/shader (Unity's Standard shader for exemple)
 * Some time this error shows up: Screen position out of view frustum
 * Can't held an object through multiple portals
