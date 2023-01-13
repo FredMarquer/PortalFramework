@@ -95,14 +95,7 @@ namespace PortalFramework
             float distanceBottomLeft = Math.SignedDistancePlanePoint(cameraForward, cameraPosition, portal.BottomLeft);
             float minDistance = Math.Min4f(distanceTopRight, distanceTopLeft, distanceBottomRight, distanceBottomLeft);
 
-            if (minDistance < minNearClip)
-            {
-                return camera.nearClipPlane;
-            }
-            else
-            {
-                return minDistance;
-            }
+            return Mathf.Max(minDistance, minNearClip);
         }
 
         private static Matrix4x4 CalculateProjectionMatrix(Camera portalCamera, int pixelWidth, int pixelHeight, ref Rect viewport)
