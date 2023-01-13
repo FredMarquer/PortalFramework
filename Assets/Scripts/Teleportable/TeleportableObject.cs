@@ -27,23 +27,18 @@ namespace PortalFramework
 
         private event Action<TeleportableObject, Portal> OnTeleport;
 
+        private Clone clone;
+        private Portal currentPortal;
+
         /// <summary>
         /// Reference to the Clone object.
         /// </summary>
-        public Clone Clone
-        { 
-            get;
-            private set;
-        }
+        public Clone Clone => this.clone;
 
         /// <summary>
         /// Reference to the current Portal.
         /// </summary>
-        public Portal CurrentPortal
-        { 
-            get;
-            private set;
-        }
+        public Portal CurrentPortal => this.currentPortal;
 
         /// <summary>
         /// Register to the teleportation callback.
@@ -68,8 +63,11 @@ namespace PortalFramework
         {
             Assert.IsNotNull(portal);
 
-            this.CurrentPortal = portal;
-            this.Clone.gameObject.SetActive(true);
+            this.currentPortal = portal;
+            this.clone.gameObject.SetActive(true);
+
+            // OnEnterPortalTrigger is called form OnTriggerEnter which is call before the update method.
+            // Therefore, the clone will be move to the correct position before the rendering.
         }
 
         /// <summary>
@@ -79,8 +77,12 @@ namespace PortalFramework
         {
             Assert.IsNotNull(portal);
 
-            this.Clone.gameObject.SetActive(false);
-            this.CurrentPortal = null;
+            // Don't clear the current portal if we just teleported
+            if (portal == this.currentPortal)
+            {
+                this.clone.gameObject.SetActive(false);
+                this.currentPortal = null;
+            }
         }
 
         private void Awake()
@@ -97,33 +99,33 @@ namespace PortalFramework
             GameObject cloneGameObject = GameObject.Instantiate<GameObject>(this.prefabClone);
             cloneGameObject.transform.parent = TeleportableObject.clonesParent;
 
-            this.Clone = cloneGameObject.GetComponent<Clone>();
-            if (this.Clone == null)
+            this.clone = cloneGameObject.GetComponent<Clone>();
+            if (this.clone == null)
             {
                 Debug.LogWarning($"Clone object '{cloneGameObject.name}' doesn't contains a Clone component. Clone component added.");
-                this.Clone = cloneGameObject.AddComponent<Clone>();
+                this.clone = cloneGameObject.AddComponent<Clone>();
             }
 
-            this.Clone.SetTeleportableObject(this);
+            this.clone.SetTeleportableObject(this);
             cloneGameObject.SetActive(false);
         }
 
         private void Update()
         {
-            if (this.CurrentPortal == null)
+            if (this.currentPortal == null)
             {
                 return;
             }
 
             // Check if we need to teleport the object
-            float distance = Math.SignedDistancePlanePoint(this.CurrentPortal.transform.forward, this.CurrentPortal.transform.position, this.transformTestPosition.position);
+            float distance = Math.SignedDistancePlanePoint(this.currentPortal.transform.forward, this.currentPortal.transform.position, this.transformTestPosition.position);
             if (distance < 0f)
             {
-                this.Teleport(this.CurrentPortal);
+                this.Teleport(this.currentPortal);
             }
 
             // Update the clone transform
-            this.CurrentPortal.TransformThroughPortal(this.transform, this.Clone.transform, true);
+            this.currentPortal.TransformThroughPortal(this.transform, this.clone.transform, true);
         }
 
         private void Teleport(Portal portal)
@@ -148,7 +150,8 @@ namespace PortalFramework
             this.OnTeleport?.Invoke(this, portal);
 
             // Update the current portal
-            this.CurrentPortal = portal.DestinationPortal;
+            // TODO : Is there a way to ensure that we are in the DestinationPortal's trigger ?
+            this.currentPortal = portal.DestinationPortal;
         }
     }
 }
