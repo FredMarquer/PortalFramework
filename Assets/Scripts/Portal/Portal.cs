@@ -30,10 +30,6 @@ namespace PortalFramework
         [Tooltip("Reference to the destination portal.")]
         private Portal destinationPortal;
 
-        [SerializeField]
-        [Tooltip("Is this portal renderer enabled. Used when the destination portal is at the same position.")]
-        private bool isRendered = true;
-
         [SerializeField, Layer]
         [Tooltip("Layer of the portal renderer.")]
         private int renderLayer;
@@ -70,11 +66,6 @@ namespace PortalFramework
         /// Reference to the destination portal.
         /// </summary>
         public Portal DestinationPortal => this.destinationPortal;
-
-        /// <summary>
-        /// Is this portal renderer enabled.
-        /// </summary>
-        public bool IsRendered => this.isRendered;
 
         /// <summary>
         /// Top right corner of the portal.
@@ -256,18 +247,12 @@ namespace PortalFramework
 
         private void OnEnable()
         {
-            if (this.isRendered)
-            {
-                PortalRenderSystem.RegisterPortal(this);
-            }
+            PortalRenderSystem.RegisterPortal(this);
         }
 
         private void OnDisable()
         {
-            if (this.isRendered)
-            {
-                PortalRenderSystem.UnregisterPortal(this);
-            }
+            PortalRenderSystem.UnregisterPortal(this);
         }
 
         private void ValidateDestination()
@@ -316,7 +301,6 @@ namespace PortalFramework
         private void CreateHierarchy()
         {
             // Create the mesh render
-            if (this.isRendered)
             {
                 this.material = new Material(Portal.portalShader);
 

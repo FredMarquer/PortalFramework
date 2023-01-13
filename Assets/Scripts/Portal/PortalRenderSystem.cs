@@ -141,7 +141,7 @@ namespace PortalFramework
             for (int i = 0; i < portals.Count; ++i)
             {
                 Portal portal = portals[i];
-                bool drawClone = this.teleportableObject.CurrentPortal != portal && portal != portal.DestinationPortal && portal.DestinationPortal.IsRendered;
+                bool drawClone = this.teleportableObject.CurrentPortal != portal && portal != portal.DestinationPortal;
                 if (this.TryRenderPortal(portal, ref cameraConfig, 0, drawClone, out PortalRenderResult result))
                 {
                     this.portalRenderResults.Add(result);
@@ -188,7 +188,6 @@ namespace PortalFramework
         private bool TryRenderPortal(Portal portalToRender, ref CameraConfiguration cameraConfig, int recursionLevel, bool drawClone, out PortalRenderResult outResult)
         {
             Assert.IsNotNull(portalToRender);
-            Assert.IsTrue(portalToRender.IsRendered);
 
             // Don't render a portal if it don't have a destination
             if (portalToRender.DestinationPortal == null)

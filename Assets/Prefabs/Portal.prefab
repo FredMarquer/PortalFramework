@@ -47,7 +47,6 @@ MonoBehaviour:
   height: 2
   widthRatio: 1
   destinationPortal: {fileID: 0}
-  isRendered: 1
   renderLayer: 7
   triggerLayer: 7
   raycastReceiverLayer: 8
