@@ -334,6 +334,11 @@ namespace PortalFramework
 
             // Create the raycast receiver
             {
+                if (this.raycastReceiverLayer == this.triggerLayer)
+                {
+                    Debug.LogError($"The trigger layer and the raycast receiver layer (= {this.raycastReceiverLayer}) should be different. Otherwise teleportable objects won't be able to traverse the portal.");
+                }
+
                 GameObject raycastReceiverGameObject = new GameObject("RaycastReceiver");
                 raycastReceiverGameObject.transform.SetParent(this.transform, false);
                 raycastReceiverGameObject.transform.localScale = new Vector3(this.Width, this.height, 1f);
