@@ -16,7 +16,7 @@ namespace PortalFramework
         [Header("Movement - Ground")]
         [SerializeField]
         [Tooltip("Speed of the character when grounded.")]
-        private float groundSpeed = 5f;
+        private float groundSpeed = 6f;
 
         [SerializeField]
         [Tooltip("Acceleration applied to the character when grounded.")]
@@ -33,7 +33,7 @@ namespace PortalFramework
         [Header("Movement - Air")]
         [SerializeField]
         [Tooltip("Speed of the character when in the air.")]
-        private float airSpeed = 5f;
+        private float airSpeed = 6f;
 
         [SerializeField]
         [Tooltip("Acceleration applied to the character when in the air.")]

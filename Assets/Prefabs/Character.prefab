@@ -211,11 +211,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   headTransform: {fileID: 424368}
-  groundSpeed: 5
+  groundSpeed: 6
   groundAcceleration: 10
   groundFriction: 6
   groundStopSpeed: 1
-  airSpeed: 5
+  airSpeed: 6
   airAcceleration: 2
   airFriction: 0
   airStopSpeed: 0
