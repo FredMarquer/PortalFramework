@@ -49,9 +49,11 @@ Basic character controller:
 ## Requirements
 
 * Unity 2021.3.13f1 (didn't test with other versions of Unity)
+* Unity's built-in render pipeline
 
 ## Not supported (yet ?)
 
+* URP and HDRP
 * Shadows through portals
 * Sound through portals
 * Animation synchronization between teleportable object and clone
