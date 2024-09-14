@@ -95,6 +95,12 @@ namespace PortalFramework
                 TeleportableObject.clonesParent = new GameObject("Clones").transform;
             }
 
+            if (this.prefabClone.GetComponentInChildren<TeleportableObject>())
+            {
+                Debug.LogError($"Game object '{this.prefabClone.name}' has a clone prefab that contains a TeleportableObject component.");
+                return;
+            }
+
             // Instantiate the clone
             GameObject cloneGameObject = GameObject.Instantiate<GameObject>(this.prefabClone);
             cloneGameObject.transform.parent = TeleportableObject.clonesParent;
