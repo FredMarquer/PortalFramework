@@ -48,7 +48,7 @@ Basic character controller:
 
 ## Requirements
 
-* Unity 2021.3.13f1 (didn't test with other versions of Unity)
+* Unity 2021 or 2022 (didn't test with other versions of Unity)
 * Unity's built-in render pipeline
 
 ## Not supported (yet ?)
