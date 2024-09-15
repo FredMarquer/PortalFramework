@@ -288,7 +288,8 @@ namespace PortalFramework
             }
 
             // Render the portal texture
-            RenderTexture renderTexture = RenderTexture.GetTemporary(this.pixelWidth, this.pixelHeight, 32);
+            RenderTextureFormat format = PortalRenderSystem.portalRenderCamera.allowHDR ? RenderTextureFormat.DefaultHDR : RenderTextureFormat.Default;
+            RenderTexture renderTexture = RenderTexture.GetTemporary(this.pixelWidth, this.pixelHeight, 32, format);
             PortalRenderSystem.portalRenderCamera.targetTexture = renderTexture;
             PortalRenderSystem.portalRenderCamera.Render();
             PortalRenderSystem.portalRenderCamera.targetTexture = null;
